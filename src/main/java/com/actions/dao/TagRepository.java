@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("*")
 @RepositoryRestResource
 public interface TagRepository extends CrudRepository<Tag,Long> {
+    public int countTagsByLabel(String label);
 }
