@@ -16,7 +16,9 @@ public class Company implements Serializable{
     private String logo;
     private String industry;
     private String url;
+    @Column(nullable = true)
     private double latitude;
+    @Column(nullable = true)
     private double longitude;
     @OneToMany(mappedBy="company",fetch= FetchType.EAGER)
     List<Operation> operations;

@@ -41,7 +41,7 @@ public class CompanyRestService {
             Company c = companyRepository.findOne(company_id);
             if(tagRepository.exists(tag_id)){
                 Tag tag = tagRepository.findOne(tag_id);
-                if(c.getTags().indexOf(tag) != -1){
+                if(c.getTags().indexOf(tag) == -1){
                     c.getTags().add(tag);
                     companyRepository.save(c);
                 }
