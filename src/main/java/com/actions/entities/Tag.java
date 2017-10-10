@@ -3,10 +3,7 @@ package com.actions.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringExclude;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 public class Tag implements Serializable {
     @Id @GeneratedValue
     private Long id;
+    @Column(unique = true)
     private String label;
     @JsonIgnore
     @ManyToMany(mappedBy = "tags")
