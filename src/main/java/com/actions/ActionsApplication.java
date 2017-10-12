@@ -34,10 +34,15 @@ public class ActionsApplication implements CommandLineRunner{
 	@Transactional
 	public void run(String... strings) throws Exception {
 		Faker faker = new Faker();
-
+		int counterTags = 0;
 		for(int i=0;i<20;i++){
-			Tag t = new Tag(faker.company().buzzword());
-			tagRepository.save(t);
+			String label = faker.company().buzzword();
+			if (tagRepository.countTagsByLabel(label) == 0){
+				Tag t = new Tag();
+				t.setLabel(label);
+				tagRepository.save(t);
+				counterTags++;
+			}
 		}
 		for(int i=1;i<100;i++){
 			Company c = new Company();
@@ -52,8 +57,8 @@ public class ActionsApplication implements CommandLineRunner{
 			c.setUrl(faker.company().url());
 			c.setCeo(faker.name().fullName());
 
-			//Tags
-			List<Integer> tagsId = generateRandomNumbers(1,20,faker.number().numberBetween(1,20));
+			//Attach tags
+			List<Integer> tagsId = generateRandomNumbers(1,counterTags,faker.number().numberBetween(1,counterTags));
 			List<Tag> tags = new ArrayList<Tag>();
 			for (int id: tagsId) {
 				tags.add(tagRepository.findOne(Integer.toUnsignedLong(id)));
