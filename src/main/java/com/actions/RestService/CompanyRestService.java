@@ -34,18 +34,16 @@ public class CompanyRestService {
             return new ResponseEntity<Company>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/companies/{company_id}/attachtag/{tag_id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/companies/{company_id}/attachtags", method = RequestMethod.PUT)
     public ResponseEntity<Company> attachTagToCompany(@PathVariable("company_id") Long company_id,
-                                                      @PathVariable("tag_id") Long tag_id){
+                                                      @RequestBody Tag[] tags){
         if (companyRepository.exists(company_id)){
             Company c = companyRepository.findOne(company_id);
-            if(tagRepository.exists(tag_id)){
-                Tag tag = tagRepository.findOne(tag_id);
-                if(c.getTags().indexOf(tag) == -1){
+            for(Tag tag: tags){
+                if(c.getTags().indexOf(tag) == -1)
                     c.getTags().add(tag);
-                    companyRepository.save(c);
-                }
             }
+            companyRepository.save(c);
             return new ResponseEntity<Company>(c, HttpStatus.OK);
         }
         else
