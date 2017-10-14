@@ -1,6 +1,7 @@
 package com.actions.config;
 
 import com.actions.entities.Company;
+import com.actions.entities.Operation;
 import com.actions.entities.Tag;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,6 @@ public class RestApiConfiguration extends RepositoryRestConfigurerAdapter {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Company.class, Tag.class);
+        config.exposeIdsFor(Company.class, Tag.class, Operation.class);
     }
 }

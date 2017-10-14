@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/tags")
 public class TagRestService {
 
     @Autowired
     private TagRepository tagRepository;
 
-    @RequestMapping(value = "/tags/exists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/exists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Boolean tagExists(@RequestParam("label") String label){
         if(tagRepository.countTagsByLabel(label.trim()) > 0) return true;
         return false;
