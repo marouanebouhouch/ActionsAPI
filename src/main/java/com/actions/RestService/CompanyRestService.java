@@ -59,6 +59,17 @@ public class CompanyRestService {
         return new ResponseEntity<Company>(HttpStatus.NO_CONTENT);
     }
 
+    @RequestMapping(value = "/{company_id}/removeTags", method = RequestMethod.PUT)
+    public ResponseEntity<Company> removeAllTags(@PathVariable("company_id") Long company_id){
+        if(companyRepository.exists(company_id)){
+            Company c = companyRepository.findOne(company_id);
+            c.getTags().removeAll(c.getTags());
+            companyRepository.save(c);
+            return new ResponseEntity<Company>(c, HttpStatus.OK);
+        }
+        return new ResponseEntity<Company>(HttpStatus.NO_CONTENT);
+    }
+
     @RequestMapping(value = "/{company_id}/sells", method = RequestMethod.GET)
     public ResponseEntity<List<Sell>> getSellsByCompany(@PathVariable("company_id")Long company_id){
         if (companyRepository.exists(company_id)){
